@@ -1,0 +1,99 @@
+docker --version
+
+-----------------------------------------------------------------------
+-----------------------------------------------------------------------
+
+docker run -p 80:80 strm/helloworld-http 
+
+- pobranie i uruchomienie obrazu dockera
+doker
+uruchom się
+przekieruj ruch z portu po prawej stronie na port po lewej stronie
+nazwa repozytorium
+nazwa projektu
+-----------------------------------------------------------------------
+-----------------------------------------------------------------------
+
+docker ps 
+
+- sprawdzenie czy są aktywne jakieś kontenery
+Po uruchomieniu konteneru wyświetla nam się też takie samo ID
+-----------------------------------------------------------------------
+-----------------------------------------------------------------------
+
+docker stop FRAGMENT NAZWY IDENTYFIKATORA POZWALAJĄCY ZIDENTYFIKOWAĆ KONTENER
+
+- zatrzymywanie działania kontenera
+na drugim terminalu można zobaczyć że się zatrzymał
+po odświeżeniu strony okazuje się że aplikacja nie działa
+można sprawdzić też docker ps
+-----------------------------------------------------------------------
+-----------------------------------------------------------------------
+
+docker run -d -p 81:80 strm/helloworld-http 
+docker run -p 82:80 strm/helloworld-http
+
+Pierwsze jest otwarte w trybie bez śledzenia działania,
+drugie powoduje śledzenie działania, zatem wynik będzie widoczny w terminalu
+
+-----------------------------------------------------------------------
+-----------------------------------------------------------------------
+
+docker ps
+
+-----------------------------------------------------------------------
+-----------------------------------------------------------------------
+
+docker ps -a
+
+Pokazuje aktywne, a także zatrzymane kontenery
+
+-----------------------------------------------------------------------
+-----------------------------------------------------------------------
+
+docker stop NAZWA
+
+Zatrzymywanie kontenera na podstawie nazwy
+
+-----------------------------------------------------------------------
+-----------------------------------------------------------------------
+
+docker ps
+docker ps -a
+
+-----------------------------------------------------------------------
+-----------------------------------------------------------------------
+
+docker run -p 8000:8080 UŻYTKOWNIK/REPOZYTORIUM
+
+Domyślnie aplikacje napisane w Springu uruchamiają się na porcie 8080
+Chcemy jednak zobaczyć aplikację na porcie 8000
+Kontener przekierowuje z portu 8080 na port 8000
+
+-----------------------------------------------------------------------
+-----------------------------------------------------------------------
+
+sudo docker rmi $(sudo docker images -a -q)
+
+Usuwa wszystkie obrazy Dockera, niezależnie od tego, czy są używane, czy nie (co może spowodować błędy, jeśli któryś obraz jest używany przez kontener).
+
+-----------------------------------------------------------------------
+-----------------------------------------------------------------------
+
+sudo docker image prune -fa && sudo docker rm $(sudo docker ps --filter=status=exited --filter=status=created -q)
+
+Usuwa nieużywane obrazy oraz nieaktywne kontenery (zatrzymane i jeszcze nieuruchomione).
+
+-----------------------------------------------------------------------
+-----------------------------------------------------------------------
+
+sudo docker volume rm $(sudo docker volume ls -qf dangling=true)
+
+Czyści osierocone wolumeny, które mogłyby zajmować miejsce na dysku bez potrzeby.
+
+-----------------------------------------------------------------------
+-----------------------------------------------------------------------
+
+sudo docker run   --volume=/:/rootfs:ro   --volume=/var/run:/var/run:rw   --volume=/sys:/sys:ro   --volume=/var/lib/docker/:/var/lib/docker:ro   --publish=8080:8080   --detach=true   --name=cadvisor   google/cadvisor:latest
+
+Uruchamia cAdvisor – narzędzie do monitorowania kontenerów Dockera, dostępne pod http://localhost:8080.
